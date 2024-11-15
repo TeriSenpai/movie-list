@@ -1,74 +1,53 @@
 <template>
   <v-container>
-    <v-row class="justify-center">
-      <v-col cols="12" md="8">
-        <v-text-field
-          label="Введите название фильма"
-          v-model="newMovie"
-          @keyup.enter="addMovie"
-          outlined
-          color="primary"
-        />
-        <v-btn color="primary" @click="addMovie">Добавить фильм</v-btn>
-      </v-col>
-    </v-row>
-
     <v-row>
       <v-col
-        v-for="(movie, index) in movies"
-        :key="index"
-        cols="12"
-        sm="6"
-        md="4"
+        v-for="movie in movies"
+        :key="movie.id"
+        cols="12" sm="6" md="4"
       >
-        <v-card class="movie-card" elevation="3">
-          <v-img
-            src="https://placeimg.com/640/480/movie"
-            height="200px"
-          ></v-img>
-          <v-card-title class="movie-title">{{ movie }}</v-card-title>
-          <v-card-actions>
-            <v-btn color="error" text @click="removeMovie(index)">
-              Удалить
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+        <MovieCard :movie="movie" @add-favorite="handleAddToFavorites">
+          <template #title>
+            <h3 style="color: #1976d2;">{{ movie.title }} ({{ movie.year }})</h3>
+          </template>
+          
+          <template #description>
+            <p>{{ movie.description.slice(0, 100) }}...</p>
+          </template>
+          
+          <template #actions>
+            <v-btn color="success" @click="share(movie)">Share</v-btn>
+            <v-btn color="primary" @click="handleAddToFavorites(movie)">Favorite</v-btn>
+          </template>
+        </MovieCard>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import MovieCard from './MovieCard.vue';
+
 export default {
+  components: { MovieCard },
   data() {
     return {
-      newMovie: "",
-      movies: ["Интерстеллар", "Начало", "Матрица"],
+      movies: [
+        { id: 1, title: 'Inception', genre: 'Sci-Fi', description: 'A thief who steals corporate secrets...', year: 2010, poster: 'https://path/to/poster1.jpg' },
+        { id: 2, title: 'The Matrix', genre: 'Action', description: 'When a beautiful stranger leads...', year: 1999, poster: 'https://path/to/poster2.jpg' }
+      ]
     };
   },
   methods: {
-    addMovie() {
-      if (this.newMovie.trim()) {
-        this.movies.push(this.newMovie.trim());
-        this.newMovie = "";
-      }
+    handleAddToFavorites(movie) {
+      console.log(`${movie.title} добавлен в избранное`);
     },
-    removeMovie(index) {
-      this.movies.splice(index, 1);
-    },
-  },
+    share(movie) {
+      console.log(`Поделиться фильмом: ${movie.title}`);
+    }
+  }
 };
 </script>
 
 <style scoped>
-.movie-card {
-  margin-top: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.movie-title {
-  font-weight: bold;
-  color: #424242;
-  font-size: 1.25rem;
-}
 </style>
