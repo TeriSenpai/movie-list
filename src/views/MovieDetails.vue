@@ -1,6 +1,6 @@
 <template>
     <v-container>
-      <h1 class="page-title">Детали фильма</h1>
+      <h1 class="page-title">{{ $t('movieDetails') }}</h1>
       <v-card class="movie-details-card" v-if="movie">
         <v-img
           src="https://placeimg.com/640/480/movie"
@@ -8,8 +8,8 @@
         ></v-img>
         <v-card-title class="movie-title">{{ movie.title }}</v-card-title>
         <v-card-text>
-          <p>Здесь будет дополнительная информация о фильме.</p>
-          <v-btn color="primary" @click="goBack">Назад</v-btn>
+          <p>{{ $t('additionalInfo') }}</p>
+          <v-btn color="primary" @click="goBack">{{ $t('back') }}</v-btn>
         </v-card-text>
       </v-card>
     </v-container>
@@ -30,30 +30,4 @@
     },
   };
   </script>
-  
-  <style scoped>
-  .page-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #424242;
-  }
-  
-  .movie-details-card {
-    margin-top: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .movie-title {
-    font-weight: bold;
-    color: #424242;
-    font-size: 1.5rem;
-    padding: 10px;
-  }
-  
-  v-btn {
-    margin-top: 20px;
-  }
-  </style>
   
