@@ -25,14 +25,10 @@
   <script>
   export default {
     name: 'HomePage',
-    data() {
-      return {
-        movies: [
-          { id: 1, title: 'Интерстеллар' },
-          { id: 2, title: 'Начало' },
-          { id: 3, title: 'Матрица' },
-        ],
-      };
+    computed: {
+      movies() {
+        return this.$store.getters.allMovies; // Получаем фильмы из хранилища
+      },
     },
     methods: {
       goToDetails(id) {

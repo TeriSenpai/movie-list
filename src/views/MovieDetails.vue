@@ -1,12 +1,12 @@
 <template>
     <v-container>
       <h1 class="page-title">Детали фильма</h1>
-      <v-card class="movie-details-card">
+      <v-card class="movie-details-card" v-if="movie">
         <v-img
           src="https://placeimg.com/640/480/movie"
           height="300px"
         ></v-img>
-        <v-card-title class="movie-title">{{ movieTitle }}</v-card-title>
+        <v-card-title class="movie-title">{{ movie.title }}</v-card-title>
         <v-card-text>
           <p>Здесь будет дополнительная информация о фильме.</p>
           <v-btn color="primary" @click="goBack">Назад</v-btn>
@@ -18,14 +18,10 @@
   <script>
   export default {
     props: ['id'],
-    data() {
-      return {
-        movieTitle: '',
-      };
-    },
-    created() {
-      const movie = { 1: 'Интерстеллар', 2: 'Начало', 3: 'Матрица' };
-      this.movieTitle = movie[this.$route.params.id];
+    computed: {
+      movie() {
+        return this.$store.state.movies.find(movie => movie.id === parseInt(this.$route.params.id));
+      },
     },
     methods: {
       goBack() {

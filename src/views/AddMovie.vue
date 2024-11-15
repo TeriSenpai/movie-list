@@ -25,7 +25,11 @@
     methods: {
       addMovie() {
         if (this.newMovie.trim()) {
-          alert(`Фильм "${this.newMovie}" добавлен!`);
+          const movie = {
+            id: Date.now(),
+            title: this.newMovie,
+          };
+          this.$store.dispatch('addMovie', movie);
           this.$router.push({ name: 'Home' });
         }
       },
